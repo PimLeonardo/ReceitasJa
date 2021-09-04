@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "972871476285",
+    "project_id": "receitas-ja-20880",
+    "storage_bucket": "receitas-ja-20880.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972871476285:android:40aabf77bd2a7986fc7654",
+        "android_client_info": {
+          "package_name": "com.example.receitasja"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "972871476285-mdcr8hhjk8i6kh42gh85ehvts7kc4aff.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdeAF7ttewtUN6Bi0jcd2vdD1wgBE2D4Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "972871476285-mdcr8hhjk8i6kh42gh85ehvts7kc4aff.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
