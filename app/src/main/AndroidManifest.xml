@@ -10,16 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ReceitasJa">
         <activity
-            android:name=".PerfilActivity"
+            android:name=".activity.PerfilActivity"
             android:exported="true" />
         <activity
-            android:name=".CadastroActivity"
+            android:name=".activity.CadastroActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

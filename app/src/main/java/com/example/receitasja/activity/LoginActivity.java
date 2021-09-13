@@ -1,6 +1,5 @@
-package com.example.receitasja;
+package com.example.receitasja.activity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,20 +10,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.example.receitasja.R;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button buttonCadastrar;
+    private Button buttonCadastrar,buttonEntrar;
     private EditText editEmail,editSenha;
-    private Button buttonEntrar;
     private ProgressBar progressBar;
 
     @Override
@@ -38,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
 
         buttonCadastrar.setOnClickListener(v -> {
 
-            Intent intent = new Intent(LoginActivity.this,CadastroActivity.class);
+            Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
             startActivity(intent);
         });
 
@@ -99,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void telaMain() {
-        Intent intent = new Intent(LoginActivity.this,PerfilActivity.class);
+        Intent intent = new Intent(LoginActivity.this, PerfilActivity.class);
         startActivity(intent);
         finish();
     }
