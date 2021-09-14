@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void telaMain() {
-        Intent intent = new Intent(LoginActivity.this, PerfilActivity.class);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }

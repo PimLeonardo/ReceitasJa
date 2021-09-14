@@ -3,12 +3,15 @@ package com.example.receitasja.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.example.receitasja.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,6 +34,7 @@ public class CadastroActivity extends AppCompatActivity {
 
     private EditText editNome,editEmail,editSenha;
     private Button botaoCadastrar;
+    private ProgressBar progressBar;
     String[] alertas = {"Preencha todos os campos","Cadastro realizado com sucesso"};
     String usuarioID;
 
@@ -111,17 +115,29 @@ public class CadastroActivity extends AppCompatActivity {
         DocumentReference documentReference = db.collection("usuarios").document(usuarioID);
         documentReference.set(usuarios).addOnSuccessListener(unused -> {
             Log.d("db", "Salvou os dado com sucesso");
+
+            progressBar.setVisibility(View.VISIBLE);
+
+            new Handler().postDelayed((Runnable) () -> {
+                telaMain();
+            }, 3000);
         })
         .addOnFailureListener(e -> {
             Log.d("dbError", "Erro ao salvar os dados" + e.toString());
         });
     }
 
-    private  void iniciarComponentes() {
+    private void telaMain() {
+        Intent intent = new Intent(CadastroActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
+    private  void iniciarComponentes() {
         editNome = findViewById(R.id.nomeCadastro);
         editEmail = findViewById(R.id.emailCadastro);
         editSenha = findViewById(R.id.senhaCadastro);
         botaoCadastrar = findViewById(R.id.confirmarCadastro);
+        progressBar = findViewById(R.id.progressBar);
     }
 }
