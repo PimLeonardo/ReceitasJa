@@ -24,8 +24,6 @@ public class PerfilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
-        getSupportActionBar().hide();
-
         iniciarCoponentes();
 
         iconLogout.setOnClickListener(v -> {

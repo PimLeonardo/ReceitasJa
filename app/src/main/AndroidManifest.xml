@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ReceitasJa">
         <activity
+            android:name=".activity.EditarPerfilActivity"
+            android:exported="true"
+            android:parentActivityName=".activity.MainActivity"/>
+        <activity
             android:name=".activity.PerfilActivity"
             android:exported="true" />
         <activity

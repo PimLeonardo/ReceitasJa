@@ -12,8 +12,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.receitasja.R;
+import com.example.receitasja.helper.ConfiguracaoFirebase;
+import com.example.receitasja.helper.UsuarioFirebase;
+import com.example.receitasja.model.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,15 +39,13 @@ public class CadastroActivity extends AppCompatActivity {
     private EditText editNome,editEmail,editSenha;
     private Button botaoCadastrar;
     private ProgressBar progressBar;
-    String[] alertas = {"Preencha todos os campos","Cadastro realizado com sucesso"};
-    String usuarioID;
+    private Usuario usuario;
+    private FirebaseAuth autenticacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
-
-        getSupportActionBar().hide();
 
         iniciarComponentes();
 
@@ -54,32 +56,45 @@ public class CadastroActivity extends AppCompatActivity {
             String senha = editSenha.getText().toString();
 
             if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
-                Snackbar snackbar = Snackbar.make(v,alertas[0],Snackbar.LENGTH_SHORT);
-                snackbar.setBackgroundTint(Color.BLACK);
-                snackbar.setActionTextColor(Color.WHITE);
-                snackbar.show();
+
+                Toast.makeText(CadastroActivity.this,"Preencha todos os campos",Toast.LENGTH_SHORT).show();
             }else {
-                cadastrarUsuario(v);
+
+                usuario = new Usuario();
+                usuario.setNome(nome);
+                usuario.setEmail(email);
+                usuario.setSenha(senha);
+                cadastrarUsuario(usuario);
             }
         });
     }
 
-    private void cadastrarUsuario(View v) {
+    private void cadastrarUsuario(Usuario usuario) {
 
-        String email = editEmail.getText().toString();
-        String senha = editSenha.getText().toString();
-
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,senha).addOnCompleteListener(task -> {
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        autenticacao.createUserWithEmailAndPassword(usuario.getEmail(), usuario.getSenha()).addOnCompleteListener(this, task -> {
 
             if (task.isSuccessful()) {
 
-                salvarDadosUsuario();
+                try {
 
-                Snackbar snackbar = Snackbar.make(v,alertas[1],Snackbar.LENGTH_SHORT);
-                snackbar.setBackgroundTint(Color.BLACK);
-                snackbar.setActionTextColor(Color.WHITE);
-                snackbar.show();
+                    String idUsuario = task.getResult().getUser().getUid();
+                    usuario.setId(idUsuario);
+                    usuario.salvar();
+
+                    UsuarioFirebase.atualizarNome(usuario.getNome());
+
+                    Toast.makeText(CadastroActivity.this,"Cadastro realizado com sucesso",Toast.LENGTH_SHORT).show();
+
+                    progressBar.setVisibility(View.VISIBLE);
+                    new Handler().postDelayed((Runnable) () -> {
+                        telaMain();
+                    }, 3000);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }else {
+
                 String erro;
                 try {
                     throw task.getException();
@@ -94,36 +109,8 @@ public class CadastroActivity extends AppCompatActivity {
                     erro = "Erro ao cadastrar usuário";
                 }
 
-                Snackbar snackbar = Snackbar.make(v,erro,Snackbar.LENGTH_SHORT);
-                snackbar.setBackgroundTint(Color.BLACK);
-                snackbar.setActionTextColor(Color.WHITE);
-                snackbar.show();
+                Toast.makeText(CadastroActivity.this,erro,Toast.LENGTH_SHORT).show();
             }
-        });
-    }
-
-    private void salvarDadosUsuario() {
-        String nome = editNome.getText().toString();
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        Map<String, Object> usuarios = new HashMap<>();
-        usuarios.put("nome",nome);
-
-        usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        DocumentReference documentReference = db.collection("usuarios").document(usuarioID);
-        documentReference.set(usuarios).addOnSuccessListener(unused -> {
-            Log.d("db", "Salvou os dado com sucesso");
-
-            progressBar.setVisibility(View.VISIBLE);
-
-            new Handler().postDelayed((Runnable) () -> {
-                telaMain();
-            }, 3000);
-        })
-        .addOnFailureListener(e -> {
-            Log.d("dbError", "Erro ao salvar os dados" + e.toString());
         });
     }
 

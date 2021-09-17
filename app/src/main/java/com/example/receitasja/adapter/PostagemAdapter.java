@@ -10,9 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.receitasja.R;
+import com.example.receitasja.model.PostagemReceita;
+
+import java.util.List;
 
 public class PostagemAdapter extends RecyclerView.Adapter<PostagemAdapter.MyViewholder> {
 
+    private  List<PostagemReceita> postagens;
+
+    public PostagemAdapter(List<PostagemReceita> listaPostagens) {
+        this.postagens = listaPostagens;
+    }
 
     @NonNull
     @Override
@@ -27,13 +35,14 @@ public class PostagemAdapter extends RecyclerView.Adapter<PostagemAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull PostagemAdapter.MyViewholder holder, int position) {
 
-        holder.textNome.setText("Leonardo Pimentel");
-        holder.textPostagem.setText("Prato muito delicioso e crocante");
+        PostagemReceita postagem = postagens.get( position );
+        holder.textNome.setText(postagem.getNome());
+        holder.textPostagem.setText(postagem.getPostagem());
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return postagens.size();
     }
 
     public class MyViewholder extends RecyclerView.ViewHolder {
