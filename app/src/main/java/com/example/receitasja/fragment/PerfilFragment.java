@@ -31,7 +31,7 @@ public class PerfilFragment extends Fragment {
     private CircleImageView imagemPerfil;
     public GridView gridViewPerfil;
     private TextView textSeguidores, textSeguindo, nomePerfil;
-    private Button buttonEditarPerfil;
+    private Button buttonEditarSeguirPerfil;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -82,12 +82,12 @@ public class PerfilFragment extends Fragment {
         gridViewPerfil = view.findViewById(R.id.gridViewPerfil);
         progressBar = view.findViewById(R.id.progressBarPerfil);
         imagemPerfil = view.findViewById(R.id.imagePerfil);
-        buttonEditarPerfil = view.findViewById(R.id.buttonEditarPerfil);
+        buttonEditarSeguirPerfil = view.findViewById(R.id.buttonEditarSeguirPerfil);
         textSeguidores = view.findViewById(R.id.seguidoresPerfil);
         textSeguindo = view.findViewById(R.id.seguindoPerfil);
         nomePerfil = view.findViewById(R.id.nomePerfil);
 
-        buttonEditarPerfil.setOnClickListener(v -> {
+        buttonEditarSeguirPerfil.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), EditarPerfilActivity.class);
             startActivity(intent);
         });

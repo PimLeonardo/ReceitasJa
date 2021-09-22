@@ -1,60 +1,65 @@
 package com.example.receitasja.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
-import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Button;
 
+import com.bumptech.glide.Glide;
 import com.example.receitasja.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.example.receitasja.model.Usuario;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PerfilActivity extends AppCompatActivity {
 
-    private TextView nomeUsuario,emailUsuario;
-    private ImageView iconLogout;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    String usuarioID;
+    private Usuario usuarioSelecionado;
+    private Button buttonCriarLista,buttonEditarSeguirPerfil;
+    private CircleImageView imagePerfilFoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
-        iniciarCoponentes();
+        iniciarComponentes();
 
-        iconLogout.setOnClickListener(v -> {
+        buttonCriarLista.setVisibility(View.INVISIBLE);
+        buttonEditarSeguirPerfil.setText("Seguir");
 
-            FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(PerfilActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        });
+        Toolbar toolbar = findViewById(R.id.toolbarPrincipal);
+        toolbar.setTitle("Perfil");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            usuarioSelecionado = (Usuario) bundle.getSerializable("usuarioClick");
+
+            getSupportActionBar().setTitle(usuarioSelecionado.getNome());
+
+            String caminhoFoto = usuarioSelecionado.getCaminhoFoto();
+            if (caminhoFoto != null) {
+                Uri uri = Uri.parse(caminhoFoto);
+                Glide.with(PerfilActivity.this).load(uri).into(imagePerfilFoto);
+            }else {
+                imagePerfilFoto.getResources().getDrawable(R.drawable.avatar);
+            }
+        }
+    }
+
+    private  void iniciarComponentes() {
+        buttonCriarLista = findViewById(R.id.buttonCriarLista);
+        buttonEditarSeguirPerfil = findViewById(R.id.buttonEditarSeguirPerfil);
+        imagePerfilFoto = findViewById(R.id.imagePerfilFoto);
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        DocumentReference documentReference = db.collection("usuarios").document(usuarioID);
-        documentReference.addSnapshotListener((value, error) -> {
-            if (value != null){
-                nomeUsuario.setText(value.getString("nome"));
-                emailUsuario.setText(email);
-            }
-        });
+    public boolean onSupportNavigateUp() {
+        finish();
+        return false;
     }
-
-    private void iniciarCoponentes() {
-        nomeUsuario = findViewById(R.id.nomeUsuario);
-        emailUsuario = findViewById(R.id.emailUsuario);
-        iconLogout = findViewById(R.id.iconLogout);
-    }
-
 }

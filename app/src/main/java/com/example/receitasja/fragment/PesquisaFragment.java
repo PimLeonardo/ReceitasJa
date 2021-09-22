@@ -1,5 +1,6 @@
 package com.example.receitasja.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,11 +13,14 @@ import android.view.LayoutInflater;
 import android.view.SearchEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.SearchView;
 
 import com.example.receitasja.R;
+import com.example.receitasja.activity.PerfilActivity;
 import com.example.receitasja.adapter.PesquisaAdapter;
 import com.example.receitasja.helper.ConfiguracaoFirebase;
+import com.example.receitasja.helper.RecyclerItemClickListener;
 import com.example.receitasja.model.Usuario;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -96,6 +100,27 @@ public class PesquisaFragment extends Fragment {
         recyclerPesquisa.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapterPesquisa = new PesquisaAdapter(listaUsuario, getActivity());
         recyclerPesquisa.setAdapter(adapterPesquisa);
+
+        recyclerPesquisa.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), recyclerPesquisa, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                Usuario usuarioClick = listaUsuario.get(position);
+                Intent intent = new Intent(getActivity(), PerfilActivity.class);
+                intent.putExtra("usuarioClick", usuarioClick);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        }));
 
         searchViewPesquisa.setQueryHint("Pesquisar usuários");
         searchViewPesquisa.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
