@@ -15,6 +15,8 @@ public class Usuario implements Serializable {
     private String email;
     private String senha;
     private String caminhoFoto;
+    private int seguindo = 0;
+    private int seguidores = 0;
 
     public Usuario() {
     }
@@ -41,8 +43,26 @@ public class Usuario implements Serializable {
         usuarioMap.put("email", getEmail());
         usuarioMap.put("id", getId());
         usuarioMap.put("caminhoFoto", getCaminhoFoto());
+        usuarioMap.put("seguindo", getSeguindo());
+        usuarioMap.put("seguidores", getSeguidores());
 
         return usuarioMap;
+    }
+
+    public int getSeguindo() {
+        return seguindo;
+    }
+
+    public void setSeguindo(int seguindo) {
+        this.seguindo = seguindo;
+    }
+
+    public int getSeguidores() {
+        return seguidores;
+    }
+
+    public void setSeguidores(int seguidores) {
+        this.seguidores = seguidores;
     }
 
     public String getId() {

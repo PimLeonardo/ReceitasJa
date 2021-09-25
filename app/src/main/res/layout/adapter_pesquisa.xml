@@ -6,16 +6,17 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:layout_margin="8dp"
-    android:background="@color/white"
     android:elevation="6dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/background"
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imagePerfilPesquisa"
+            android:padding="8dp"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:src="@drawable/avatar" />
@@ -26,6 +27,8 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
+            android:textColor="@color/white"
+            android:textStyle="bold"
             android:gravity="center|left"
             android:text="Nome do usuário" />
 
