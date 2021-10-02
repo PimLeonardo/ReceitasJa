@@ -90,10 +90,5 @@ public class FeedFragment extends Fragment {
         PostagemReceita postagem = new PostagemReceita("Leonardo Pimentel", "Bela receita de bolo");
         this.postagens.add(postagem);
 
-        postagem = new PostagemReceita("Jao Casado", "Receita de miojo");
-        this.postagens.add(postagem);
-
-        postagem = new PostagemReceita("Andre Maconheiro", "#Brisadeiro");
-        this.postagens.add(postagem);
     }
 }

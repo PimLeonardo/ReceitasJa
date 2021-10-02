@@ -21,6 +21,7 @@ import com.example.receitasja.activity.PerfilActivity;
 import com.example.receitasja.adapter.PesquisaAdapter;
 import com.example.receitasja.helper.ConfiguracaoFirebase;
 import com.example.receitasja.helper.RecyclerItemClickListener;
+import com.example.receitasja.helper.UsuarioFirebase;
 import com.example.receitasja.model.Usuario;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,6 +44,7 @@ public class PesquisaFragment extends Fragment {
     private List<Usuario> listaUsuario;
     private DatabaseReference usuarioRef;
     private PesquisaAdapter adapterPesquisa;
+    private String idUsuarioLogado;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -95,6 +97,7 @@ public class PesquisaFragment extends Fragment {
 
         listaUsuario = new ArrayList<>();
         usuarioRef = ConfiguracaoFirebase.getFirebase().child("usuarios");
+        idUsuarioLogado = UsuarioFirebase.getIdUsuario();
 
         recyclerPesquisa.setHasFixedSize(true);
         recyclerPesquisa.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -158,7 +161,12 @@ public class PesquisaFragment extends Fragment {
 
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()){
 
-                        listaUsuario.add(dataSnapshot.getValue(Usuario.class));
+                        Usuario usuario = dataSnapshot.getValue(Usuario.class);
+
+                        if (idUsuarioLogado.equals(usuario.getId()))
+                            continue;
+
+                        listaUsuario.add(usuario);
                     }
                     adapterPesquisa.notifyDataSetChanged();
                 }

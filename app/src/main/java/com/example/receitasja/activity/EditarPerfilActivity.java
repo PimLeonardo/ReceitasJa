@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.receitasja.R;
 import com.example.receitasja.helper.ConfiguracaoFirebase;
+import com.example.receitasja.helper.Permissao;
 import com.example.receitasja.helper.UsuarioFirebase;
 import com.example.receitasja.model.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,11 +50,16 @@ public class EditarPerfilActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityResultLauncher;
     private StorageReference storageRef;
     private String idUsuario;
+    private String[] permissoesPost = new String[] {
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_perfil);
+
+        Permissao.validarPermissoes(permissoesPost, this, 1);
 
         usuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
         storageRef = ConfiguracaoFirebase.getFirebaseStorage();
@@ -126,6 +133,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
 
         textAlterarFoto.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
             if (intent.resolveActivity(getPackageManager()) != null){
                 activityResultLauncher.launch(intent);
             }else {

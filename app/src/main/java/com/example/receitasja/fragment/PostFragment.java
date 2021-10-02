@@ -1,14 +1,33 @@
 package com.example.receitasja.fragment;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.Manifest;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.receitasja.R;
+import com.example.receitasja.activity.EditarPerfilActivity;
+import com.example.receitasja.helper.Permissao;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +35,12 @@ import com.example.receitasja.R;
  * create an instance of this fragment.
  */
 public class PostFragment extends Fragment {
+
+    private Button abrirCamera,abrirGaleria;
+    ActivityResultLauncher<Intent> activityResultLauncher;
+    private String[] permissoesPost = new String[] {
+            Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.CAMERA
+    };
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +86,42 @@ public class PostFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_post, container, false);
+        View view = inflater.inflate(R.layout.fragment_post, container, false);
+
+        Permissao.validarPermissoes(permissoesPost, getActivity(), 1);
+
+        abrirCamera = view.findViewById(R.id.abrirCamera);
+        abrirGaleria = view.findViewById(R.id.abrirGaleria);
+
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+
+            if ( result.getResultCode() == RESULT_OK && result.getData() != null){
+                Bundle bundle = result.getData().getExtras();
+                Bitmap bitmap = (Bitmap) bundle.get("data");
+                //id.setImageBitmap(bitmap);
+            }
+        });
+
+        abrirCamera.setOnClickListener(v -> {
+            Intent intent = new Intent (MediaStore.ACTION_IMAGE_CAPTURE);
+
+            if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                activityResultLauncher.launch(intent);
+            }else {
+                Toast.makeText(getContext(),"Esse app não tem suporte para essa ação", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        abrirGaleria.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+            if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                activityResultLauncher.launch(intent);
+            }else {
+                Toast.makeText(getContext(),"Esse app não tem suporte para essa ação", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return view;
     }
 }
