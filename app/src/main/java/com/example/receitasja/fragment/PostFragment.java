@@ -3,6 +3,7 @@ package com.example.receitasja.fragment;
 import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.receitasja.R;
 import com.example.receitasja.activity.EditarPerfilActivity;
+import com.example.receitasja.activity.PostagemActivity;
 import com.example.receitasja.helper.Permissao;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -36,6 +38,7 @@ import java.io.ByteArrayOutputStream;
  */
 public class PostFragment extends Fragment {
 
+    private String cameraGaleria;
     private Button abrirCamera,abrirGaleria;
     ActivityResultLauncher<Intent> activityResultLauncher;
     private String[] permissoesPost = new String[] {
@@ -95,10 +98,34 @@ public class PostFragment extends Fragment {
 
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 
-            if ( result.getResultCode() == RESULT_OK && result.getData() != null){
-                Bundle bundle = result.getData().getExtras();
-                Bitmap bitmap = (Bitmap) bundle.get("data");
-                //id.setImageBitmap(bitmap);
+            if ( result.getResultCode() == getActivity().RESULT_OK && result.getData() != null){
+
+                Bitmap imagem = null;
+
+                try {
+
+                    if (cameraGaleria == "camera") {
+
+                        Bundle bundle = result.getData().getExtras();
+                        Bitmap bitmap = (Bitmap) bundle.get("data");
+                        imagem = bitmap;
+                    }if (cameraGaleria == "galeria") {
+
+                        Uri localImagemSelecionada = result.getData().getData();
+                        imagem = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), localImagemSelecionada);
+                    }if (imagem != null){
+
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        imagem.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream);
+                        byte[] dadosimagem = byteArrayOutputStream.toByteArray();
+
+                        Intent intent = new Intent(getActivity(), PostagemActivity.class);
+                        intent.putExtra("fotoSelecionada",dadosimagem);
+                        startActivity(intent);
+                    }
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -107,6 +134,7 @@ public class PostFragment extends Fragment {
 
             if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
                 activityResultLauncher.launch(intent);
+                cameraGaleria = "camera";
             }else {
                 Toast.makeText(getContext(),"Esse app não tem suporte para essa ação", Toast.LENGTH_SHORT).show();
             }
@@ -117,6 +145,7 @@ public class PostFragment extends Fragment {
 
             if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
                 activityResultLauncher.launch(intent);
+                cameraGaleria = "galeria";
             }else {
                 Toast.makeText(getContext(),"Esse app não tem suporte para essa ação", Toast.LENGTH_SHORT).show();
             }
