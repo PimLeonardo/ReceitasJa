@@ -1,34 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    android:orientation="vertical"
+    android:fillViewport="true"
     tools:context=".activity.PostagemActivity">
 
-    <include layout="@layout/toolbar"/>
-
-    <ImageView
-        android:id="@+id/fotoPostEscolhida"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/avatar"
-        android:layout_margin="6dp"/>
-
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:boxBackgroundColor="@color/cor1"
-        android:layout_margin="16dp">
+        android:background="@drawable/background"
+        android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textPostagem"
+        <include layout="@layout/toolbar" />
+
+        <ImageView
+            android:id="@+id/fotoPostEscolhida"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_margin="6dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/avatar" />
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:hint="Receita" />
-    </com.google.android.material.textfield.TextInputLayout>
-</LinearLayout>
+            android:layout_margin="8dp"
+            app:boxBackgroundColor="@color/cor1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textNomeReceita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nome da receita"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            app:boxBackgroundColor="@color/cor1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textPostagem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Receita"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
