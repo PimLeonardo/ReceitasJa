@@ -87,8 +87,5 @@ public class FeedFragment extends Fragment {
 
     public void fazerPostagens() {
 
-        PostagemReceita postagem = new PostagemReceita("Leonardo Pimentel", "Bela receita de bolo");
-        this.postagens.add(postagem);
-
     }
 }
