@@ -9,19 +9,26 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.receitasja.R;
+import com.example.receitasja.adapter.GridAdapter;
 import com.example.receitasja.helper.ConfiguracaoFirebase;
 import com.example.receitasja.helper.UsuarioFirebase;
+import com.example.receitasja.model.PostagemReceita;
 import com.example.receitasja.model.Usuario;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -35,6 +42,9 @@ public class PerfilActivity extends AppCompatActivity {
     private DatabaseReference usuarioSeguindoRef;
     private DatabaseReference seguidoresRef;
     private DatabaseReference usuarioLogadoRef;
+    private DatabaseReference postagensUsuarioRef;
+    private GridView gridViewPerfil;
+    private GridAdapter gridAdapter;
     private String idUsuarioLogado;
     private ValueEventListener valueEventListener;
     private TextView textSeguidores,textSeguindo,nomePerfil;
@@ -62,6 +72,7 @@ public class PerfilActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             usuarioSelecionado = (Usuario) bundle.getSerializable("usuarioClick");
+            postagensUsuarioRef = ConfiguracaoFirebase.getFirebase().child("postagens").child(usuarioSelecionado.getId());
 
             getSupportActionBar().setTitle(usuarioSelecionado.getNome());
             nomePerfil.setText(usuarioSelecionado.getNome());
@@ -74,6 +85,16 @@ public class PerfilActivity extends AppCompatActivity {
                 imagePerfilFoto.getResources().getDrawable(R.drawable.avatar);
             }
         }
+
+        iniciarImageLoader();
+
+        carregarPostagem();
+    }
+
+    public void iniciarImageLoader() {
+
+        ImageLoaderConfiguration configuration = new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoader.getInstance().init(configuration);
     }
 
     private void recuperarDadosLogado() {
@@ -168,6 +189,30 @@ public class PerfilActivity extends AppCompatActivity {
         usuarioSeguindoRef.removeEventListener(valueEventListener);
     }
 
+    public void carregarPostagem() {
+
+        postagensUsuarioRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                List<String> urlFotos = new ArrayList<>();
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+
+                    PostagemReceita postagemReceita = dataSnapshot.getValue(PostagemReceita.class);
+                    urlFotos.add(postagemReceita.getCaminhoFoto());
+                }
+
+                gridAdapter = new GridAdapter(getApplicationContext(),R.layout.grid_perfil,urlFotos);
+                gridViewPerfil.setAdapter(gridAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private void recuperarSeguidores() {
 
         usuarioSeguindoRef = usuarioRef.child(usuarioSelecionado.getId());
@@ -198,6 +243,7 @@ public class PerfilActivity extends AppCompatActivity {
         textSeguidores = findViewById(R.id.numeroSeguidoresPerfil);
         textSeguindo = findViewById(R.id.numeroSeguindoPerfil);
         nomePerfil = findViewById(R.id.nomePerfil);
+        gridViewPerfil = findViewById(R.id.gridViewPerfil);
     }
 
     @Override
