@@ -7,21 +7,10 @@
     tools:context=".fragment.PerfilFragment"
     android:background="@drawable/background">
 
-    <ProgressBar
-        android:id="@+id/progressBarPerfil"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imagePerfilFoto"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonEditarSeguirPerfil"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +24,7 @@
         android:layout_marginTop="16dp"
         android:text="Nome"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -47,7 +36,7 @@
         android:layout_height="wrap_content"
         android:text="Seguidores"
         android:textColor="@color/white"
-        android:textSize="12sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/numeroSeguidoresPerfil" />
@@ -58,7 +47,7 @@
         android:layout_height="wrap_content"
         android:text="Seguindo"
         android:textColor="@color/white"
-        android:textSize="12sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toBottomOf="@+id/numeroSeguindoPerfil" />
@@ -68,13 +57,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/background_botao_perfil"
-        android:text="Adicionar lista"
-        android:textSize="12dp"
+        android:text="Minhas receitas"
         android:textColor="@color/white"
+        android:textSize="12dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/nomePerfil" />
+        app:layout_constraintTop_toBottomOf="@+id/nomePerfil"
+        app:layout_constraintVertical_bias="0.65" />
 
     <TextView
         android:id="@+id/numeroSeguidoresPerfil"
@@ -112,8 +103,10 @@
         android:textSize="12dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toStartOf="@+id/buttonCriarLista"
+        app:layout_constraintHorizontal_bias="0.64"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomePerfil" />
+        app:layout_constraintTop_toBottomOf="@+id/nomePerfil"
+        app:layout_constraintVertical_bias="0.65" />
 
     <GridView
         android:id="@+id/gridViewPerfil"

@@ -8,10 +8,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +33,8 @@ public class PostagemActivity extends AppCompatActivity {
     private ImageView fotoPostEscolhida;
     private Bitmap imagem;
     private String idUsuarioLogado;
-    private TextInputEditText textNomeReceita,textReceita;
+    private TextInputEditText textNomeReceita,textReceita,textIngredientes;
+    private ProgressBar progressBarPostagem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,7 @@ public class PostagemActivity extends AppCompatActivity {
         postagem.setIdUsuario(idUsuarioLogado);
         postagem.setTextReceita(textReceita.getText().toString());
         postagem.setTextNomeReceita(textNomeReceita.getText().toString());
+        postagem.setTextIngredientes(textIngredientes.getText().toString());
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         imagem.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream);
@@ -81,8 +86,11 @@ public class PostagemActivity extends AppCompatActivity {
 
                 if (postagem.salvarImagem()) {
 
+                    progressBarPostagem.setVisibility(View.VISIBLE);
+                    new Handler().postDelayed((Runnable) () -> {
+                        finish();
+                    }, 3000);
                     Toast.makeText(PostagemActivity.this,"Sucesso ao salvar imagem", Toast.LENGTH_SHORT).show();
-                    finish();
                 }
             });
         });
@@ -92,6 +100,8 @@ public class PostagemActivity extends AppCompatActivity {
         fotoPostEscolhida = findViewById(R.id.fotoPostEscolhida);
         textNomeReceita = findViewById(R.id.textNomeReceita);
         textReceita = findViewById(R.id.textReceita);
+        textIngredientes = findViewById(R.id.textIngredientes);
+        progressBarPostagem = findViewById(R.id.progressBarPostagem);
     }
 
     @Override

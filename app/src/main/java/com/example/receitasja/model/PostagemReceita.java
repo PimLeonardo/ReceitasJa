@@ -9,6 +9,7 @@ public class PostagemReceita {
     private String idUsuario;
     private String textNomeReceita;
     private String textReceita;
+    private String textIngredientes;
     private String caminhoFoto;
 
     public PostagemReceita() {
@@ -57,6 +58,14 @@ public class PostagemReceita {
 
     public void setTextReceita(String textReceita) {
         this.textReceita = textReceita;
+    }
+
+    public String getTextIngredientes() {
+        return textIngredientes;
+    }
+
+    public void setTextIngredientes(String textIngredientes) {
+        this.textIngredientes = textIngredientes;
     }
 
     public String getCaminhoFoto() {

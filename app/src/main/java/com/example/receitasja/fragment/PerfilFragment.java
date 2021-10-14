@@ -1,8 +1,10 @@
 package com.example.receitasja.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -13,10 +15,27 @@ import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.receitasja.R;
 import com.example.receitasja.activity.EditarPerfilActivity;
+import com.example.receitasja.activity.PerfilActivity;
+import com.example.receitasja.adapter.GridAdapter;
+import com.example.receitasja.helper.ConfiguracaoFirebase;
 import com.example.receitasja.helper.UsuarioFirebase;
+import com.example.receitasja.model.PostagemReceita;
+import com.example.receitasja.model.Usuario;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -27,11 +46,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class PerfilFragment extends Fragment {
 
-    private ProgressBar progressBar;
-    private CircleImageView imagemPerfil;
+    private CircleImageView imagePerfilFoto;
     public GridView gridViewPerfil;
     private TextView textSeguidores, textSeguindo, nomePerfil;
     private Button buttonEditarSeguirPerfil;
+    private Usuario usuarioLogado;
+    private DatabaseReference usuarioRef;
+    private DatabaseReference usuarioLogadoRef;
+    private DatabaseReference postagensUsuarioRef;
+    private ValueEventListener valueEventListenerPerfil;
+    private GridAdapter gridAdapter;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,13 +104,19 @@ public class PerfilFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_perfil, container, false);
 
-        gridViewPerfil = view.findViewById(R.id.gridViewPerfil);
-        progressBar = view.findViewById(R.id.progressBarPerfil);
-        imagemPerfil = view.findViewById(R.id.imagePerfil);
-        buttonEditarSeguirPerfil = view.findViewById(R.id.buttonEditarSeguirPerfil);
-        textSeguidores = view.findViewById(R.id.seguidoresPerfil);
-        textSeguindo = view.findViewById(R.id.seguindoPerfil);
-        nomePerfil = view.findViewById(R.id.nomePerfil);
+        usuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
+        usuarioRef = ConfiguracaoFirebase.getFirebase().child("usuarios");
+        postagensUsuarioRef = ConfiguracaoFirebase.getFirebase().child("postagens").child(usuarioLogado.getId());
+
+        iniciarComponentes(view);
+
+        String caminhoFoto = usuarioLogado.getCaminhoFoto();
+        if (caminhoFoto != null) {
+            Uri url = Uri.parse(caminhoFoto);
+            Glide.with(getActivity()).load(url).into(imagePerfilFoto);
+        }else {
+            imagePerfilFoto.setImageResource(R.drawable.avatar);
+        }
 
         buttonEditarSeguirPerfil.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), EditarPerfilActivity.class);
@@ -95,6 +126,85 @@ public class PerfilFragment extends Fragment {
         FirebaseUser usuarioPerfil = UsuarioFirebase.getUsuario();
         nomePerfil.setText(usuarioPerfil.getDisplayName());
 
+        iniciarImageLoader();
+
+        carregarPostagem();
+
         return view;
+    }
+
+    public void iniciarImageLoader() {
+
+        ImageLoaderConfiguration configuration = new ImageLoaderConfiguration.Builder(getActivity()).memoryCache(new LruMemoryCache(2*1024*1024))
+                .memoryCacheSize(2*1024*1024).diskCacheSize(50*1024*1024).diskCacheFileCount(100).diskCacheFileNameGenerator(new HashCodeFileNameGenerator()).build();
+        ImageLoader.getInstance().init(configuration);
+    }
+
+    public void carregarPostagem() {
+
+        postagensUsuarioRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                List<String> urlFotos = new ArrayList<>();
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+
+                    PostagemReceita postagemReceita = dataSnapshot.getValue(PostagemReceita.class);
+                    urlFotos.add(postagemReceita.getCaminhoFoto());
+                }
+
+                gridAdapter = new GridAdapter(getActivity(),R.layout.grid_perfil,urlFotos);
+                gridViewPerfil.setAdapter(gridAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private  void iniciarComponentes(View view) {
+        gridViewPerfil = view.findViewById(R.id.gridViewPerfil);
+        imagePerfilFoto = view.findViewById(R.id.imagePerfilFoto);
+        buttonEditarSeguirPerfil = view.findViewById(R.id.buttonEditarSeguirPerfil);
+        textSeguidores = view.findViewById(R.id.numeroSeguidoresPerfil);
+        textSeguindo = view.findViewById(R.id.numeroSeguindoPerfil);
+        nomePerfil = view.findViewById(R.id.nomePerfil);
+    }
+
+    private void recuperarDadosUsuario() {
+
+        usuarioLogadoRef = usuarioRef.child(usuarioLogado.getId());
+        valueEventListenerPerfil = usuarioLogadoRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                Usuario usuario = snapshot.getValue(Usuario.class);
+
+                String seguindo = String.valueOf(usuario.getSeguindo());
+                String seguidores = String.valueOf(usuario.getSeguidores());
+
+                textSeguidores.setText(seguidores);
+                textSeguindo.setText(seguindo);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        recuperarDadosUsuario();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        usuarioLogadoRef.removeEventListener(valueEventListenerPerfil);
     }
 }

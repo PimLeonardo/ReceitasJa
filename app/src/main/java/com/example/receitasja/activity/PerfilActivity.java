@@ -23,8 +23,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.utils.L;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,7 +85,7 @@ public class PerfilActivity extends AppCompatActivity {
                 Uri uri = Uri.parse(caminhoFoto);
                 Glide.with(PerfilActivity.this).load(uri).into(imagePerfilFoto);
             }else {
-                imagePerfilFoto.getResources().getDrawable(R.drawable.avatar);
+                imagePerfilFoto.setImageResource(R.drawable.avatar);
             }
         }
 
@@ -93,7 +96,8 @@ public class PerfilActivity extends AppCompatActivity {
 
     public void iniciarImageLoader() {
 
-        ImageLoaderConfiguration configuration = new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoaderConfiguration configuration = new ImageLoaderConfiguration.Builder(this).memoryCache(new LruMemoryCache(2*1024*1024))
+                .memoryCacheSize(2*1024*1024).diskCacheSize(50*1024*1024).diskCacheFileCount(100).diskCacheFileNameGenerator(new HashCodeFileNameGenerator()).build();
         ImageLoader.getInstance().init(configuration);
     }
 
