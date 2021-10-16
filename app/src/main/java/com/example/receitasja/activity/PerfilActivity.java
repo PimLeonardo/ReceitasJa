@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -51,6 +53,7 @@ public class PerfilActivity extends AppCompatActivity {
     private String idUsuarioLogado;
     private ValueEventListener valueEventListener;
     private TextView textSeguidores,textSeguindo,nomePerfil;
+    private List<PostagemReceita> postagens;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +95,15 @@ public class PerfilActivity extends AppCompatActivity {
         iniciarImageLoader();
 
         carregarPostagem();
+
+        gridViewPerfil.setOnItemClickListener((parent, view, position, id) -> {
+
+            PostagemReceita postagemReceita = postagens.get(position);
+            Intent intent = new Intent(getApplicationContext(), AbrirPostagemActivity.class);
+            intent.putExtra("postagem",postagemReceita);
+            intent.putExtra("usuario", usuarioSelecionado);
+            startActivity(intent);
+        });
     }
 
     public void iniciarImageLoader() {
@@ -195,6 +207,7 @@ public class PerfilActivity extends AppCompatActivity {
 
     public void carregarPostagem() {
 
+        postagens = new ArrayList<>();
         postagensUsuarioRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -203,6 +216,7 @@ public class PerfilActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
 
                     PostagemReceita postagemReceita = dataSnapshot.getValue(PostagemReceita.class);
+                    postagens.add(postagemReceita);
                     urlFotos.add(postagemReceita.getCaminhoFoto());
                 }
 

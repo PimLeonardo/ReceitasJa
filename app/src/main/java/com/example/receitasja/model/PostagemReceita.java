@@ -3,7 +3,9 @@ package com.example.receitasja.model;
 import com.example.receitasja.helper.ConfiguracaoFirebase;
 import com.google.firebase.database.DatabaseReference;
 
-public class PostagemReceita {
+import java.io.Serializable;
+
+public class PostagemReceita implements Serializable {
 
     private String id;
     private String idUsuario;

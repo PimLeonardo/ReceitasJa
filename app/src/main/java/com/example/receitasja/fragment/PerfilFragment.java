@@ -111,7 +111,7 @@ public class PerfilFragment extends Fragment {
         iniciarComponentes(view);
 
         String caminhoFoto = usuarioLogado.getCaminhoFoto();
-        if (caminhoFoto != null) {
+        if (!caminhoFoto.isEmpty()) {
             Uri url = Uri.parse(caminhoFoto);
             Glide.with(getActivity()).load(url).into(imagePerfilFoto);
         }else {

@@ -67,7 +67,7 @@
             <TextView
                 android:id="@+id/textPostagem"
                 style="@style/TextPost"
-                android:text="Postagem Texto" />
+                android:text="Ingredientes" />
 
         </LinearLayout>
 
