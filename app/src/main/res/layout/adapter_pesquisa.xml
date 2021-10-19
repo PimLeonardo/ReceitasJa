@@ -28,8 +28,7 @@
             android:layout_weight="1"
             android:gravity="center|left"
             android:text="Nome do usuário"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:textColor="@color/text" />
 
     </LinearLayout>
 </LinearLayout>

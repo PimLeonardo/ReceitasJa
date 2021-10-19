@@ -30,7 +30,7 @@
             android:text="Alterar foto"
             android:padding="6dp"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/text"
             android:textStyle="bold" />
 
         <TextView
@@ -66,6 +66,5 @@
             android:textColor="@color/white"/>
 
     </LinearLayout>
-
 
 </LinearLayout>

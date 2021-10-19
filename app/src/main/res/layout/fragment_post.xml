@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:drawableRight="@drawable/ic_camera"
         android:text="câmera"
-        android:textColor="#000000"
+        android:textColor="@color/white"
         android:layout_marginBottom="16dp"/>
 
     <Button
@@ -23,6 +23,6 @@
         android:layout_height="wrap_content"
         android:drawableRight="@drawable/ic_image_search"
         android:text="galeria"
-        android:textColor="#000000"/>
+        android:textColor="@color/white"/>
 
 </LinearLayout>
