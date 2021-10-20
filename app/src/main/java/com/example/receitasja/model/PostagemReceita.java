@@ -1,9 +1,13 @@
 package com.example.receitasja.model;
 
 import com.example.receitasja.helper.ConfiguracaoFirebase;
+import com.example.receitasja.helper.UsuarioFirebase;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PostagemReceita implements Serializable {
 
@@ -22,11 +26,33 @@ public class PostagemReceita implements Serializable {
         setId(idPostagem);
     }
 
-    public boolean salvarImagem (){
+    public boolean salvarImagem (DataSnapshot seguidoresSnapshot){
 
+        Map objeto = new HashMap();
+        Usuario usuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
-        DatabaseReference postagensRef = firebaseRef.child("postagens").child(getIdUsuario()).child(getId());
-        postagensRef.setValue(this);
+
+        String caminhoPost = "/" + getIdUsuario() + "/" + getId();
+        objeto.put("/postagens" + caminhoPost, this);
+        objeto.put("/lista" + caminhoPost, this);
+
+        for (DataSnapshot seguidores: seguidoresSnapshot.getChildren()) {
+
+            String idSeguidor = seguidores.getKey();
+
+            HashMap<String, Object> dadosSeguidor = new HashMap<>();
+            dadosSeguidor.put("fotoPostagem", getCaminhoFoto());
+            dadosSeguidor.put("ingredientes", getTextIngredientes());
+            dadosSeguidor.put("nomeReceita", getTextNomeReceita());
+            dadosSeguidor.put("id", getId());
+            dadosSeguidor.put("nomeUsuario", usuarioLogado.getNome());
+            dadosSeguidor.put("fotoUsuario", usuarioLogado.getCaminhoFoto());
+
+            String caminhoPostFeed = "/" + idSeguidor + "/" + getId();
+            objeto.put("/feed" + caminhoPostFeed, dadosSeguidor);
+        }
+
+        firebaseRef.updateChildren(objeto);
         return true;
     }
 

@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/avatar" />
+        tools:src="@drawable/avatar" />
 
     <TextView
         android:id="@+id/nomePerfil"
@@ -56,24 +56,22 @@
         android:id="@+id/buttonCriarLista"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/background_botao_perfil"
         android:elevation="6dp"
         android:text="Minhas receitas"
         android:textColor="@color/white"
         android:textSize="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintBottom_toTopOf="@+id/gridViewPerfil"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/nomePerfil"
-        app:layout_constraintVertical_bias="0.65" />
+        app:layout_constraintStart_toStartOf="@+id/guideline2" />
 
     <TextView
         android:id="@+id/numeroSeguidoresPerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="0"
+        tools:text="0"
         android:textColor="@color/text"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -86,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="0"
+        tools:text="0"
         android:textColor="@color/text"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -98,6 +96,7 @@
         android:id="@+id/buttonEditarSeguirPerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/background_botao_perfil"
         android:elevation="6dp"
         android:text="Editar perfil"
@@ -105,10 +104,7 @@
         android:textSize="12dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toStartOf="@+id/buttonCriarLista"
-        app:layout_constraintHorizontal_bias="0.64"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomePerfil"
-        app:layout_constraintVertical_bias="0.65" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <GridView
         android:id="@+id/gridViewPerfil"
@@ -146,5 +142,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="226dp" />
+        app:layout_constraintGuide_begin="173dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

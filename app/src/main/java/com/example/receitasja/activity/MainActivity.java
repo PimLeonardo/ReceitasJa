@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbarPrincipal);
-        toolbar.setTitle("Receitas já");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Receitas Já");
 
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
 

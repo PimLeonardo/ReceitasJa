@@ -1,6 +1,7 @@
 package com.example.receitasja.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -22,7 +23,12 @@ import com.example.receitasja.R;
 import com.example.receitasja.helper.ConfiguracaoFirebase;
 import com.example.receitasja.helper.UsuarioFirebase;
 import com.example.receitasja.model.PostagemReceita;
+import com.example.receitasja.model.Usuario;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -33,8 +39,13 @@ public class PostagemActivity extends AppCompatActivity {
     private ImageView fotoPostEscolhida;
     private Bitmap imagem;
     private String idUsuarioLogado;
+    private Usuario usuarioLogado;
+    private DatabaseReference usuarioRef;
+    private DatabaseReference usuarioLogadoRef;
+    private DatabaseReference firebaseRef;
+    private DataSnapshot seguidoresSnapshot;
+    private AlertDialog dialog;
     private TextInputEditText textNomeReceita,textReceita,textIngredientes;
-    private ProgressBar progressBarPostagem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +54,11 @@ public class PostagemActivity extends AppCompatActivity {
 
         iniciarComponentes();
 
+        firebaseRef = ConfiguracaoFirebase.getFirebase();
+        usuarioRef = ConfiguracaoFirebase.getFirebase().child("usuarios");
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
+
+        recuperarDadosLogado();
 
         Toolbar toolbar = findViewById(R.id.toolbarPrincipal);
         toolbar.setTitle("Postagem");
@@ -59,8 +74,52 @@ public class PostagemActivity extends AppCompatActivity {
         }
     }
 
-    private void fazerPostagem(){
+    private void alertDialog (String titulo) {
 
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(titulo);
+        alert.setCancelable(false);
+        alert.setView(R.layout.dialog_carregando);
+        dialog = alert.create();
+        dialog.show();
+    }
+
+    private void recuperarDadosLogado() {
+
+        alertDialog ("Carregando");
+        usuarioLogadoRef = usuarioRef.child(idUsuarioLogado);
+        usuarioLogadoRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                usuarioLogado = snapshot.getValue(Usuario.class);
+
+                DatabaseReference seguidoresRef = firebaseRef.child("seguidores").child(idUsuarioLogado);
+                seguidoresRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        seguidoresSnapshot = snapshot;
+                        dialog.cancel();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void fazerPostagem() {
+
+        alertDialog ("Salvando postagem");
         PostagemReceita postagem = new PostagemReceita();
         postagem.setIdUsuario(idUsuarioLogado);
         postagem.setTextReceita(textReceita.getText().toString());
@@ -84,13 +143,11 @@ public class PostagemActivity extends AppCompatActivity {
                 Uri uri = task.getResult();
                 postagem.setCaminhoFoto(uri.toString());
 
-                if (postagem.salvarImagem()) {
+                if (postagem.salvarImagem(seguidoresSnapshot)) {
 
-                    progressBarPostagem.setVisibility(View.VISIBLE);
-                    new Handler().postDelayed((Runnable) () -> {
-                        finish();
-                    }, 3000);
                     Toast.makeText(PostagemActivity.this,"Sucesso ao salvar imagem", Toast.LENGTH_SHORT).show();
+                    dialog.cancel();
+                    finish();
                 }
             });
         });
@@ -101,7 +158,6 @@ public class PostagemActivity extends AppCompatActivity {
         textNomeReceita = findViewById(R.id.textNomeReceita);
         textReceita = findViewById(R.id.textReceita);
         textIngredientes = findViewById(R.id.textIngredientes);
-        progressBarPostagem = findViewById(R.id.progressBarPostagem);
     }
 
     @Override

@@ -133,7 +133,7 @@ public class PerfilActivity extends AppCompatActivity {
 
     private void verificaSegueUsuario() {
 
-        DatabaseReference seguidorRef = seguidoresRef.child(idUsuarioLogado).child(usuarioSelecionado.getId());
+        DatabaseReference seguidorRef = seguidoresRef.child(usuarioSelecionado.getId()).child(idUsuarioLogado);
 
         seguidorRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -169,11 +169,11 @@ public class PerfilActivity extends AppCompatActivity {
 
     private void armazenarSeguidor(Usuario userLogado, Usuario userSelecionado) {
 
-        HashMap<String,Object> dadosUsuarioPesquisado = new HashMap<>();
-        dadosUsuarioPesquisado.put("nome",userSelecionado.getNome());
-        dadosUsuarioPesquisado.put("caminhoFoto",userSelecionado.getCaminhoFoto());
-        DatabaseReference seguidorRef = seguidoresRef.child(userLogado.getId()).child(userSelecionado.getId());
-        seguidorRef.setValue(dadosUsuarioPesquisado);
+        HashMap<String,Object> dadosUsuarioLogado = new HashMap<>();
+        dadosUsuarioLogado.put("nome",userLogado.getNome());
+        dadosUsuarioLogado.put("caminhoFoto",userLogado.getCaminhoFoto());
+        DatabaseReference seguidorRef = seguidoresRef.child(userSelecionado.getId()).child(userLogado.getId());
+        seguidorRef.setValue(dadosUsuarioLogado);
 
         buttonEditarSeguirPerfil.setOnClickListener(null);
         buttonEditarSeguirPerfil.setText("Seguindo");
