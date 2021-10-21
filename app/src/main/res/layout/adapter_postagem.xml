@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
+    android:layout_margin="5dp"
     android:elevation="10dp"
     android:padding="10dp">
 
@@ -17,19 +17,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="6dp">
+            android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imagePerfil"
+                android:id="@+id/imagePerfilFeed"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_margin="6dp"
-                android:layout_weight="0"
                 android:src="@drawable/avatar" />
 
             <TextView
-                android:id="@+id/textNome"
+                android:id="@+id/textNomeFeed"
                 style="@style/TextNome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,12 +36,12 @@
                 android:text="Nome" />
 
             <TextView
-                android:id="@+id/textData"
+                android:id="@+id/textDataFeed"
                 style="@style/TextData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Data" />
+                tools:text="Data" />
         </LinearLayout>
 
         <LinearLayout
@@ -52,22 +50,23 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textTituloReceita"
+                android:id="@+id/textTituloReceitaFeed"
                 style="@style/TextTitulo"
                 android:gravity="center"
-                android:text="Nome da receita" />
+                tools:text="Nome da receita" />
 
             <ImageView
-                android:id="@+id/imagePost"
+                android:id="@+id/imagePostagemFeed"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:layout_margin="6dp"
                 android:scaleType="centerCrop"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <TextView
-                android:id="@+id/textPostagem"
+                android:id="@+id/textIngredientesFeed"
                 style="@style/TextPost"
-                android:text="Ingredientes" />
+                tools:text="Ingredientes" />
 
         </LinearLayout>
 
@@ -77,37 +76,37 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/buttonFavorito"
+                android:id="@+id/buttonFavoritoFeed"
                 android:background="@drawable/background_botao_perfil"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:layout_margin="2dp"
-                android:textSize="10dp"
+                android:layout_margin="1dp"
+                android:textSize="11dp"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/ic_favorite_off"
                 android:text="Favoritar" />
 
             <Button
-                android:id="@+id/buttonComentar"
+                android:id="@+id/buttonComentarFeed"
                 android:background="@drawable/background_botao_perfil"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:layout_margin="2dp"
-                android:textSize="10dp"
+                android:layout_margin="1dp"
+                android:textSize="11dp"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/ic_comentario_branco"
                 android:text="Comentar" />
 
             <Button
-                android:id="@+id/buttonAdicionar"
+                android:id="@+id/buttonAdicionarFeed"
                 android:background="@drawable/background_botao_perfil"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:layout_margin="2dp"
-                android:textSize="10dp"
+                android:layout_margin="1dp"
+                android:textSize="11dp"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/ic_add_branco"
                 android:text="Adicionar" />

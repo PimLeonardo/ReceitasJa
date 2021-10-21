@@ -2,6 +2,7 @@ package com.example.receitasja.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,7 +13,14 @@ import android.view.ViewGroup;
 
 import com.example.receitasja.R;
 import com.example.receitasja.adapter.PostagemAdapter;
+import com.example.receitasja.helper.ConfiguracaoFirebase;
+import com.example.receitasja.helper.UsuarioFirebase;
+import com.example.receitasja.model.Feed;
 import com.example.receitasja.model.PostagemReceita;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +32,12 @@ import java.util.List;
  */
 public class FeedFragment extends Fragment {
 
-    private RecyclerView recyclerPostagem;
-    private List<PostagemReceita> postagens = new ArrayList<>();
+    private String idUsuarioLogado;
+    private RecyclerView recyclerViewFeed;
+    private PostagemAdapter adapterFeed;
+    private  List<Feed> listFeed = new ArrayList<>();
+    private ValueEventListener valueEventListenerFeed;
+    private DatabaseReference feedRef;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -73,19 +85,51 @@ public class FeedFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
 
-        recyclerPostagem = view.findViewById(R.id.recycleViewPost);
+        idUsuarioLogado = UsuarioFirebase.getIdUsuario();
+        feedRef = ConfiguracaoFirebase.getFirebase().child("feed").child(idUsuarioLogado);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerPostagem.setLayoutManager(layoutManager);
+        iniciarComponentes(view);
 
-        this.fazerPostagens();
-        PostagemAdapter adapter = new PostagemAdapter(postagens);
-        recyclerPostagem.setAdapter(adapter);
+        adapterFeed = new PostagemAdapter(listFeed, getActivity());
+        recyclerViewFeed.setHasFixedSize(true);
+        recyclerViewFeed.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerViewFeed.setAdapter(adapterFeed);
 
         return view;
     }
 
-    public void fazerPostagens() {
+    private void fazerFeed() {
 
+        valueEventListenerFeed = feedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+                    listFeed.add(dataSnapshot.getValue(Feed.class));
+                }
+                adapterFeed.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        fazerFeed();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        feedRef.removeEventListener(valueEventListenerFeed);
+    }
+
+    public void iniciarComponentes(View view) {
+        recyclerViewFeed = view.findViewById(R.id.recycleViewFeed);
     }
 }
