@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -107,6 +109,7 @@ public class FeedFragment extends Fragment {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()){
                     listFeed.add(dataSnapshot.getValue(Feed.class));
                 }
+                Collections.reverse(listFeed);
                 adapterFeed.notifyDataSetChanged();
             }
 

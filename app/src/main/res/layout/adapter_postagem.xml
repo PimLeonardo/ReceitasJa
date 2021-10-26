@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:elevation="10dp"
-    android:padding="10dp">
+    android:elevation="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,19 +28,13 @@
             <TextView
                 android:id="@+id/textNomeFeed"
                 style="@style/TextNome"
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:text="Nome" />
 
-            <TextView
-                android:id="@+id/textDataFeed"
-                style="@style/TextData"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                tools:text="Data" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,40 +57,26 @@
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <TextView
+                android:id="@+id/ingredientesTitulo"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
+                style="@style/TextPost"
+                android:text="Ingredientes:"
+                android:textStyle="bold" />
+
+            <TextView
                 android:id="@+id/textIngredientesFeed"
+                android:layout_margin="6dp"
                 style="@style/TextPost"
                 tools:text="Ingredientes" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/buttonFavoritoFeed"
-                android:background="@drawable/background_botao_perfil"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:layout_margin="1dp"
-                android:textSize="11dp"
-                android:layout_weight="1"
-                android:drawableLeft="@drawable/ic_favorite_off"
-                android:text="Favoritar" />
-
-            <Button
-                android:id="@+id/buttonComentarFeed"
-                android:background="@drawable/background_botao_perfil"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:layout_margin="1dp"
-                android:textSize="11dp"
-                android:layout_weight="1"
-                android:drawableLeft="@drawable/ic_comentario_branco"
-                android:text="Comentar" />
 
             <Button
                 android:id="@+id/buttonAdicionarFeed"
@@ -106,10 +85,22 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:layout_margin="1dp"
-                android:textSize="11dp"
+                android:textSize="13dp"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/ic_add_branco"
                 android:text="Adicionar" />
+
+            <Button
+                android:id="@+id/buttonComentarFeed"
+                android:background="@drawable/background_botao_perfil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_margin="1dp"
+                android:textSize="13dp"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_comentario_branco"
+                android:text="Comentar" />
 
         </LinearLayout>
 

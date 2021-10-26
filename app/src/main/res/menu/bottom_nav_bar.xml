@@ -11,18 +11,13 @@
         android:id="@+id/navPesquisar"
         android:enabled="true"
         android:icon="@drawable/ic_search"
-        android:title="Pesquisar" />
+        android:title="Pesquisa" />
 
     <item
         android:id="@+id/navAddPost"
         android:enabled="true"
-        android:icon="@drawable/ic_add" />
-
-    <item
-        android:id="@+id/navNotificacao"
-        android:enabled="true"
-        android:icon="@drawable/ic_notifications"
-        android:title="Notificações" />
+        android:icon="@drawable/ic_add_branco"
+        android:title="Postagem"/>
 
     <item
         android:id="@+id/navPerfil"

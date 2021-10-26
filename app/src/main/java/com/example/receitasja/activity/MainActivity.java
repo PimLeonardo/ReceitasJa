@@ -3,38 +3,23 @@ package com.example.receitasja.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.receitasja.R;
-import com.example.receitasja.adapter.PostagemAdapter;
 import com.example.receitasja.fragment.FeedFragment;
-import com.example.receitasja.fragment.NotificacaoFragment;
 import com.example.receitasja.fragment.PerfilFragment;
 import com.example.receitasja.fragment.PesquisaFragment;
 import com.example.receitasja.fragment.PostFragment;
 import com.example.receitasja.helper.ConfiguracaoFirebase;
-import com.example.receitasja.model.PostagemReceita;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -76,9 +61,6 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navAddPost:
                     fragmentTransaction.replace(R.id.viewPager, new PostFragment()).commit();
-                    return true;
-                case R.id.navNotificacao:
-                    fragmentTransaction.replace(R.id.viewPager, new NotificacaoFragment()).commit();
                     return true;
                 case R.id.navPerfil:
                     fragmentTransaction.replace(R.id.viewPager, new PerfilFragment()).commit();

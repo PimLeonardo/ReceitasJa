@@ -1,6 +1,7 @@
 package com.example.receitasja.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.receitasja.R;
+import com.example.receitasja.activity.ComentariosActivity;
 import com.example.receitasja.model.Feed;
 import com.example.receitasja.model.PostagemReceita;
 
@@ -51,6 +53,12 @@ public class PostagemAdapter extends RecyclerView.Adapter<PostagemAdapter.MyView
         holder.nome.setText(feed.getNomeUsuario());
         holder.ingredientes.setText(feed.getIngredientes());
         holder.titulo.setText(feed.getNomeReceita());
+
+        holder.comentar.setOnClickListener(v -> {
+            Intent intent = new Intent(context,ComentariosActivity.class);
+            intent.putExtra("idPostagem", feed.getId());
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -63,7 +71,7 @@ public class PostagemAdapter extends RecyclerView.Adapter<PostagemAdapter.MyView
         CircleImageView fotoPerfil;
         TextView nome, ingredientes, titulo;
         ImageView imagePostagem;
-        Button favoritar, comentar, adicionar;
+        Button comentar, adicionar;
 
         public MyViewholder(@NonNull View itemView) {
             super(itemView);
@@ -73,7 +81,6 @@ public class PostagemAdapter extends RecyclerView.Adapter<PostagemAdapter.MyView
             ingredientes = itemView.findViewById(R.id.textIngredientesFeed);
             titulo = itemView.findViewById(R.id.textTituloReceitaFeed);
             imagePostagem = itemView.findViewById(R.id.imagePostagemFeed);
-            favoritar = itemView.findViewById(R.id.buttonFavoritoFeed);
             comentar = itemView.findViewById(R.id.buttonComentarFeed);
             adicionar = itemView.findViewById(R.id.buttonAdicionarFeed);
         }

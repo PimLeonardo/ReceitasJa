@@ -13,20 +13,33 @@
         <entry key="..\:/ReceitasJa/app/src/main/res/drawable/container_user.xml" value="0.3828125" />
         <entry key="..\:/ReceitasJa/app/src/main/res/drawable/edit_text.xml" value="0.3828125" />
         <entry key="..\:/ReceitasJa/app/src/main/res/drawable/ic_add.xml" value="0.3828125" />
+        <entry key="..\:/ReceitasJa/app/src/main/res/drawable/ic_add_branco.xml" value="0.3769230769230769" />
         <entry key="..\:/ReceitasJa/app/src/main/res/drawable/ic_camera.xml" value="0.3769230769230769" />
+        <entry key="..\:/ReceitasJa/app/src/main/res/drawable/ic_comentario.xml" value="0.3769230769230769" />
+        <entry key="..\:/ReceitasJa/app/src/main/res/drawable/ic_email.xml" value="0.3769230769230769" />
+        <entry key="..\:/ReceitasJa/app/src/main/res/drawable/ic_eye.xml" value="0.3769230769230769" />
         <entry key="..\:/ReceitasJa/app/src/main/res/drawable/ic_image_search.xml" value="0.3828125" />
+        <entry key="..\:/ReceitasJa/app/src/main/res/drawable/ic_logout.xml" value="0.3769230769230769" />
+        <entry key="..\:/ReceitasJa/app/src/main/res/drawable/ic_menu.xml" value="0.3769230769230769" />
+        <entry key="..\:/ReceitasJa/app/src/main/res/drawable/ic_refresh.xml" value="0.3769230769230769" />
+        <entry key="..\:/ReceitasJa/app/src/main/res/drawable/ic_search.xml" value="0.3769230769230769" />
+        <entry key="..\:/ReceitasJa/app/src/main/res/drawable/ic_send.xml" value="0.3769230769230769" />
+        <entry key="..\:/ReceitasJa/app/src/main/res/drawable/ic_settings.xml" value="0.3769230769230769" />
         <entry key="..\:/ReceitasJa/app/src/main/res/layout/activity_abrir_postagem.xml" value="0.365036231884058" />
         <entry key="..\:/ReceitasJa/app/src/main/res/layout/activity_cadastro.xml" value="0.36666666666666664" />
+        <entry key="..\:/ReceitasJa/app/src/main/res/layout/activity_comentarios.xml" value="0.3378623188405797" />
         <entry key="..\:/ReceitasJa/app/src/main/res/layout/activity_editar_perfil.xml" value="0.3654891304347826" />
         <entry key="..\:/ReceitasJa/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
         <entry key="..\:/ReceitasJa/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/ReceitasJa/app/src/main/res/layout/activity_perfil.xml" value="0.36666666666666664" />
         <entry key="..\:/ReceitasJa/app/src/main/res/layout/activity_postagem.xml" value="0.3134057971014493" />
+        <entry key="..\:/ReceitasJa/app/src/main/res/layout/adapter_comentario.xml" value="0.36666666666666664" />
         <entry key="..\:/ReceitasJa/app/src/main/res/layout/adapter_pesquisa.xml" value="0.3654891304347826" />
         <entry key="..\:/ReceitasJa/app/src/main/res/layout/adapter_postagem.xml" value="0.3428442028985507" />
         <entry key="..\:/ReceitasJa/app/src/main/res/layout/bottom_navigation.xml" value="0.36666666666666664" />
         <entry key="..\:/ReceitasJa/app/src/main/res/layout/content_editar_perfil.xml" value="0.3654891304347826" />
         <entry key="..\:/ReceitasJa/app/src/main/res/layout/dialog_carregando.xml" value="0.34692028985507245" />
+        <entry key="..\:/ReceitasJa/app/src/main/res/layout/divisor.xml" value="0.36666666666666664" />
         <entry key="..\:/ReceitasJa/app/src/main/res/layout/fragment_feed.xml" value="0.36666666666666664" />
         <entry key="..\:/ReceitasJa/app/src/main/res/layout/fragment_first.xml" value="0.3654891304347826" />
         <entry key="..\:/ReceitasJa/app/src/main/res/layout/fragment_notificacao.xml" value="0.36666666666666664" />

@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ReceitasJa">
         <activity
+            android:name=".activity.ComentariosActivity"
+            android:exported="true" />
+        <activity
             android:name=".activity.AbrirPostagemActivity"
             android:exported="true" />
         <activity

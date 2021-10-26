@@ -17,7 +17,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AbrirPostagemActivity extends AppCompatActivity {
 
-    private TextView nomeUsuarioAbrirPostagem,nomeReceitaAbrirPostagem,curtidasPostagem,ingredientesAbrirPostagem,receitaAbrirPostagem,visualizarComentarios;
+    private TextView nomeUsuarioAbrirPostagem,nomeReceitaAbrirPostagem,ingredientesAbrirPostagem,receitaAbrirPostagem,visualizarComentarios;
     private CircleImageView fotoPerfilAbrirPostagem;
     private ImageView imageViewFotoPostagem;
 
@@ -54,7 +54,6 @@ public class AbrirPostagemActivity extends AppCompatActivity {
     private  void iniciarComponentes() {
         nomeUsuarioAbrirPostagem = findViewById(R.id.nomeUsuarioAbrirPostagem);
         nomeReceitaAbrirPostagem = findViewById(R.id.nomeReceitaAbrirPostagem);
-        curtidasPostagem = findViewById(R.id.curtidasPostagem);
         ingredientesAbrirPostagem = findViewById(R.id.ingredientesAbrirPostagem);
         receitaAbrirPostagem = findViewById(R.id.receitaAbrirPostagem);
         visualizarComentarios = findViewById(R.id.visualizarComentarios);
