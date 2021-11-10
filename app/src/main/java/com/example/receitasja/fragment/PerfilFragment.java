@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.receitasja.R;
+import com.example.receitasja.activity.AbrirPostagemActivity;
 import com.example.receitasja.activity.EditarPerfilActivity;
 import com.example.receitasja.activity.PerfilActivity;
 import com.example.receitasja.adapter.GridAdapter;
@@ -110,21 +111,11 @@ public class PerfilFragment extends Fragment {
 
         iniciarComponentes(view);
 
-        String caminhoFoto = usuarioLogado.getCaminhoFoto();
-        if (!caminhoFoto.isEmpty()) {
-            Uri url = Uri.parse(caminhoFoto);
-            Glide.with(getActivity()).load(url).into(imagePerfilFoto);
-        }else {
-            imagePerfilFoto.setImageResource(R.drawable.avatar);
-        }
-
         buttonEditarSeguirPerfil.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), EditarPerfilActivity.class);
             startActivity(intent);
         });
 
-        FirebaseUser usuarioPerfil = UsuarioFirebase.getUsuario();
-        nomePerfil.setText(usuarioPerfil.getDisplayName());
 
         iniciarImageLoader();
 
@@ -181,12 +172,14 @@ public class PerfilFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 Usuario usuario = snapshot.getValue(Usuario.class);
+                FirebaseUser usuarioPerfil = UsuarioFirebase.getUsuario();
 
                 String seguindo = String.valueOf(usuario.getSeguindo());
                 String seguidores = String.valueOf(usuario.getSeguidores());
 
                 textSeguidores.setText(seguidores);
                 textSeguindo.setText(seguindo);
+                nomePerfil.setText(usuarioPerfil.getDisplayName());
             }
 
             @Override
@@ -196,10 +189,24 @@ public class PerfilFragment extends Fragment {
         });
     }
 
+    private void atualizarFoto() {
+
+        usuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
+
+        String caminhoFoto = usuarioLogado.getCaminhoFoto();
+        if (!caminhoFoto.isEmpty()) {
+            Uri url = Uri.parse(caminhoFoto);
+            Glide.with(getActivity()).load(url).into(imagePerfilFoto);
+        }else {
+            imagePerfilFoto.setImageResource(R.drawable.avatar);
+        }
+    }
+
     @Override
     public void onStart() {
         super.onStart();
         recuperarDadosUsuario();
+        atualizarFoto();
     }
 
     @Override

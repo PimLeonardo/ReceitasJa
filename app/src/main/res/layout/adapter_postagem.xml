@@ -31,7 +31,8 @@
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
                 android:layout_weight="1"
                 android:text="Nome" />
 
@@ -52,7 +53,8 @@
                 android:id="@+id/imagePostagemFeed"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_margin="6dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
                 android:scaleType="centerCrop"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
@@ -66,7 +68,8 @@
 
             <TextView
                 android:id="@+id/textIngredientesFeed"
-                android:layout_margin="6dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
                 style="@style/TextPost"
                 tools:text="Ingredientes" />
 
@@ -84,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:layout_margin="1dp"
+                android:layout_margin="5dp"
                 android:textSize="13dp"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/ic_add_branco"
@@ -96,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:layout_margin="1dp"
+                android:layout_margin="5dp"
                 android:textSize="13dp"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/ic_comentario_branco"
