@@ -100,7 +100,7 @@ public class PerfilActivity extends AppCompatActivity {
 
             PostagemReceita postagemReceita = postagens.get(position);
             Intent intent = new Intent(getApplicationContext(), AbrirPostagemActivity.class);
-            intent.putExtra("postagem",postagemReceita);
+            intent.putExtra("postagem", postagemReceita);
             intent.putExtra("usuario", usuarioSelecionado);
             startActivity(intent);
         });

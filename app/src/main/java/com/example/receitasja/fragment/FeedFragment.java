@@ -106,6 +106,8 @@ public class FeedFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                listFeed.clear();
+
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()){
                     listFeed.add(dataSnapshot.getValue(Feed.class));
                 }

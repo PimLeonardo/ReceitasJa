@@ -3,11 +3,13 @@ package com.example.receitasja.model;
 public class Feed {
 
     private String id;
+    private String idUsuario;
     private String nomeUsuario;
     private String nomeReceita;
     private String fotoUsuario;
     private String fotoPostagem;
     private String ingredientes;
+    private String receita;
 
     public Feed() {
     }
@@ -58,5 +60,21 @@ public class Feed {
 
     public void setIngredientes(String ingredientes) {
         this.ingredientes = ingredientes;
+    }
+
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getReceita() {
+        return receita;
+    }
+
+    public void setReceita(String receita) {
+        this.receita = receita;
     }
 }

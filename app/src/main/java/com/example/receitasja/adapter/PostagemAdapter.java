@@ -15,9 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.receitasja.R;
+import com.example.receitasja.activity.AbrirPostagemActivity;
 import com.example.receitasja.activity.ComentariosActivity;
 import com.example.receitasja.model.Feed;
 import com.example.receitasja.model.PostagemReceita;
+import com.example.receitasja.model.Usuario;
 
 import java.util.List;
 
@@ -57,6 +59,29 @@ public class PostagemAdapter extends RecyclerView.Adapter<PostagemAdapter.MyView
         holder.comentar.setOnClickListener(v -> {
             Intent intent = new Intent(context,ComentariosActivity.class);
             intent.putExtra("idPostagem", feed.getId());
+            context.startActivity(intent);
+        });
+
+        Usuario usuario = new Usuario();
+        usuario.setCaminhoFoto(feed.getFotoUsuario());
+        usuario.setNome(feed.getNomeUsuario());
+
+        PostagemReceita postagemReceita = new PostagemReceita();
+        postagemReceita.setCaminhoFoto(feed.getFotoPostagem());
+        postagemReceita.setTextReceita(feed.getReceita());
+        postagemReceita.setTextIngredientes(feed.getIngredientes());
+        postagemReceita.setTextNomeReceita(feed.getNomeReceita());
+        postagemReceita.setId(feed.getId());
+        postagemReceita.setIdUsuario(feed.getIdUsuario());
+
+        holder.adicionar.setOnClickListener(v -> {
+            postagemReceita.adicionarLista();
+        });
+
+        holder.imagePostagem.setOnClickListener(v -> {
+            Intent intent = new Intent(context, AbrirPostagemActivity.class);
+            intent.putExtra("postagem", postagemReceita);
+            intent.putExtra("usuario", usuario);
             context.startActivity(intent);
         });
     }

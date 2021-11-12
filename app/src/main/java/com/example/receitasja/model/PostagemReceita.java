@@ -45,7 +45,9 @@ public class PostagemReceita implements Serializable {
             dadosSeguidor.put("ingredientes", getTextIngredientes());
             dadosSeguidor.put("nomeReceita", getTextNomeReceita());
             dadosSeguidor.put("id", getId());
+            dadosSeguidor.put("idUsuario", getIdUsuario());
             dadosSeguidor.put("nomeUsuario", usuarioLogado.getNome());
+            dadosSeguidor.put("receita", getTextReceita());
             dadosSeguidor.put("fotoUsuario", usuarioLogado.getCaminhoFoto());
 
             String caminhoPostFeed = "/" + idSeguidor + "/" + getId();
@@ -54,6 +56,18 @@ public class PostagemReceita implements Serializable {
 
         firebaseRef.updateChildren(objeto);
         return true;
+    }
+
+    public void adicionarLista () {
+
+        Map objeto = new HashMap();
+        Usuario usuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
+
+        String caminhoPost = "/" + usuarioLogado.getId() + "/" + getId();
+        objeto.put("/lista" + caminhoPost, this);
+
+        firebaseRef.updateChildren(objeto);
     }
 
     public String getId() {

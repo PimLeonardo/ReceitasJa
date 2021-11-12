@@ -3,8 +3,10 @@ package com.example.receitasja.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ public class AbrirPostagemActivity extends AppCompatActivity {
     private TextView nomeUsuarioAbrirPostagem,nomeReceitaAbrirPostagem,ingredientesAbrirPostagem,receitaAbrirPostagem,visualizarComentarios;
     private CircleImageView fotoPerfilAbrirPostagem;
     private ImageView imageViewFotoPostagem;
+    private PostagemReceita postagem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,7 @@ public class AbrirPostagemActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
 
-            PostagemReceita postagem = (PostagemReceita) bundle.getSerializable("postagem");
+            postagem = (PostagemReceita) bundle.getSerializable("postagem");
             Usuario usuario = (Usuario) bundle.getSerializable("usuario");
 
             Uri uriUsuario = Uri.parse(usuario.getCaminhoFoto());
@@ -49,6 +52,14 @@ public class AbrirPostagemActivity extends AppCompatActivity {
             ingredientesAbrirPostagem.setText(postagem.getTextIngredientes());
             receitaAbrirPostagem.setText(postagem.getTextReceita());
         }
+
+        visualizarComentarios.setOnClickListener(v -> {
+            if (postagem != null) {
+                Intent intent = new Intent(this, ComentariosActivity.class);
+                intent.putExtra("idPostagem", postagem.getId());
+                startActivity(intent);
+            }
+        });
     }
 
     private  void iniciarComponentes() {
