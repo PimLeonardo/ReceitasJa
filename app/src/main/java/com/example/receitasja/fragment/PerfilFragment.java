@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.example.receitasja.R;
 import com.example.receitasja.activity.AbrirPostagemActivity;
 import com.example.receitasja.activity.EditarPerfilActivity;
+import com.example.receitasja.activity.ListaActivity;
 import com.example.receitasja.activity.PerfilActivity;
 import com.example.receitasja.adapter.GridAdapter;
 import com.example.receitasja.helper.ConfiguracaoFirebase;
@@ -50,7 +51,7 @@ public class PerfilFragment extends Fragment {
     private CircleImageView imagePerfilFoto;
     public GridView gridViewPerfil;
     private TextView textSeguidores, textSeguindo, nomePerfil;
-    private Button buttonEditarSeguirPerfil;
+    private Button buttonEditarSeguirPerfil, buttonCriarLista;
     private Usuario usuarioLogado;
     private DatabaseReference usuarioRef;
     private DatabaseReference usuarioLogadoRef;
@@ -116,6 +117,11 @@ public class PerfilFragment extends Fragment {
             startActivity(intent);
         });
 
+        buttonCriarLista.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ListaActivity.class);
+            startActivity(intent);
+        });
+
 
         iniciarImageLoader();
 
@@ -162,6 +168,7 @@ public class PerfilFragment extends Fragment {
         textSeguidores = view.findViewById(R.id.numeroSeguidoresPerfil);
         textSeguindo = view.findViewById(R.id.numeroSeguindoPerfil);
         nomePerfil = view.findViewById(R.id.nomePerfil);
+        buttonCriarLista = view.findViewById(R.id.buttonCriarLista);
     }
 
     private void recuperarDadosUsuario() {
