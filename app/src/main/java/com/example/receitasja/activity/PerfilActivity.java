@@ -32,6 +32,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.utils.L;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -219,7 +220,8 @@ public class PerfilActivity extends AppCompatActivity {
                     postagens.add(postagemReceita);
                     urlFotos.add(postagemReceita.getCaminhoFoto());
                 }
-
+                Collections.reverse(urlFotos);
+                Collections.reverse(postagens);
                 gridAdapter = new GridAdapter(getApplicationContext(),R.layout.grid_perfil,urlFotos);
                 gridViewPerfil.setAdapter(gridAdapter);
             }

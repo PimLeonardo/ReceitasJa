@@ -37,6 +37,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -149,7 +150,7 @@ public class PerfilFragment extends Fragment {
                     PostagemReceita postagemReceita = dataSnapshot.getValue(PostagemReceita.class);
                     urlFotos.add(postagemReceita.getCaminhoFoto());
                 }
-
+                Collections.reverse(urlFotos);
                 gridAdapter = new GridAdapter(getActivity(),R.layout.grid_perfil,urlFotos);
                 gridViewPerfil.setAdapter(gridAdapter);
             }

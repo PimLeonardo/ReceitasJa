@@ -42,9 +42,14 @@ public class AbrirPostagemActivity extends AppCompatActivity {
             postagem = (PostagemReceita) bundle.getSerializable("postagem");
             Usuario usuario = (Usuario) bundle.getSerializable("usuario");
 
-            Uri uriUsuario = Uri.parse(usuario.getCaminhoFoto());
-            Glide.with(AbrirPostagemActivity.this).load(uriUsuario).into(fotoPerfilAbrirPostagem);
-            nomeUsuarioAbrirPostagem.setText(usuario.getNome());
+            if (usuario.getNome() == "") {
+                fotoPerfilAbrirPostagem.setVisibility(View.GONE);
+                nomeUsuarioAbrirPostagem.setVisibility(View.GONE);
+            } else {
+                nomeUsuarioAbrirPostagem.setText(usuario.getNome());
+                Uri uriUsuario = Uri.parse(usuario.getCaminhoFoto());
+                Glide.with(AbrirPostagemActivity.this).load(uriUsuario).placeholder(R.drawable.avatar).error(R.drawable.avatar).into(fotoPerfilAbrirPostagem);
+            }
 
             Uri uriPostagem = Uri.parse(postagem.getCaminhoFoto());
             Glide.with(AbrirPostagemActivity.this).load(uriPostagem).into(imageViewFotoPostagem);

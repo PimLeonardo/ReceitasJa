@@ -32,23 +32,25 @@ public class PostagemReceita implements Serializable {
         Usuario usuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
 
+        HashMap<String, Object> dadosSeguidor = new HashMap<>();
+        dadosSeguidor.put("fotoPostagem", getCaminhoFoto());
+        dadosSeguidor.put("ingredientes", getTextIngredientes());
+        dadosSeguidor.put("nomeReceita", getTextNomeReceita());
+        dadosSeguidor.put("id", getId());
+        dadosSeguidor.put("idUsuario", getIdUsuario());
+        dadosSeguidor.put("nomeUsuario", usuarioLogado.getNome());
+        dadosSeguidor.put("receita", getTextReceita());
+        dadosSeguidor.put("fotoUsuario", usuarioLogado.getCaminhoFoto());
+
         String caminhoPost = "/" + getIdUsuario() + "/" + getId();
         objeto.put("/postagens" + caminhoPost, this);
-        objeto.put("/lista" + caminhoPost, this);
+
+        String caminhoPostLista = "/" + usuarioLogado.getId() + "/" + getId();
+        objeto.put("/lista" + caminhoPostLista, dadosSeguidor);
 
         for (DataSnapshot seguidores: seguidoresSnapshot.getChildren()) {
 
             String idSeguidor = seguidores.getKey();
-
-            HashMap<String, Object> dadosSeguidor = new HashMap<>();
-            dadosSeguidor.put("fotoPostagem", getCaminhoFoto());
-            dadosSeguidor.put("ingredientes", getTextIngredientes());
-            dadosSeguidor.put("nomeReceita", getTextNomeReceita());
-            dadosSeguidor.put("id", getId());
-            dadosSeguidor.put("idUsuario", getIdUsuario());
-            dadosSeguidor.put("nomeUsuario", usuarioLogado.getNome());
-            dadosSeguidor.put("receita", getTextReceita());
-            dadosSeguidor.put("fotoUsuario", usuarioLogado.getCaminhoFoto());
 
             String caminhoPostFeed = "/" + idSeguidor + "/" + getId();
             objeto.put("/feed" + caminhoPostFeed, dadosSeguidor);
@@ -64,8 +66,18 @@ public class PostagemReceita implements Serializable {
         Usuario usuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
 
+        HashMap<String, Object> dadosSeguidor = new HashMap<>();
+        dadosSeguidor.put("fotoPostagem", getCaminhoFoto());
+        dadosSeguidor.put("ingredientes", getTextIngredientes());
+        dadosSeguidor.put("nomeReceita", getTextNomeReceita());
+        dadosSeguidor.put("id", getId());
+        dadosSeguidor.put("idUsuario", getIdUsuario());
+        dadosSeguidor.put("nomeUsuario", usuarioLogado.getNome());
+        dadosSeguidor.put("receita", getTextReceita());
+        dadosSeguidor.put("fotoUsuario", usuarioLogado.getCaminhoFoto());
+
         String caminhoPost = "/" + usuarioLogado.getId() + "/" + getId();
-        objeto.put("/lista" + caminhoPost, this);
+        objeto.put("/lista" + caminhoPost, dadosSeguidor);
 
         firebaseRef.updateChildren(objeto);
     }

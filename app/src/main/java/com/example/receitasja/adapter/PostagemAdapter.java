@@ -49,7 +49,8 @@ public class PostagemAdapter extends RecyclerView.Adapter<PostagemAdapter.MyView
 
         Uri uriFotoUsuario = Uri.parse(feed.getFotoUsuario());
         Uri uriFotoPostagem = Uri.parse(feed.getFotoPostagem());
-        Glide.with(context).load(uriFotoUsuario).into(holder.fotoPerfil);
+
+        Glide.with(context).load(uriFotoUsuario).placeholder(R.drawable.avatar).error(R.drawable.avatar).into(holder.fotoPerfil);
         Glide.with(context).load(uriFotoPostagem).into(holder.imagePostagem);
 
         holder.nome.setText(feed.getNomeUsuario());

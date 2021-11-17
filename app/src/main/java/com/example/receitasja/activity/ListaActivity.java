@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ListaActivity extends AppCompatActivity {
@@ -28,15 +29,15 @@ public class ListaActivity extends AppCompatActivity {
     private List<Lista> minhaLista = new ArrayList<>();
     private ValueEventListener valueEventListenerLista;
     private DatabaseReference listaRef;
-    private String idLogado;
+    private String idUsuarioLogado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista);
 
-        idLogado = UsuarioFirebase.getIdUsuario();
-        listaRef = ConfiguracaoFirebase.getFirebase().child("lista").child(idLogado);
+        idUsuarioLogado = UsuarioFirebase.getIdUsuario();
+        listaRef = ConfiguracaoFirebase.getFirebase().child("lista").child(idUsuarioLogado);
 
         iniciarComponentes();
 
@@ -45,7 +46,7 @@ public class ListaActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        listaAdapter = new ListaAdapter(minhaLista, getApplicationContext());
+        listaAdapter = new ListaAdapter(minhaLista, this);
         recyclerLista.setHasFixedSize(true);
         recyclerLista.setLayoutManager(new LinearLayoutManager(this));
         recyclerLista.setAdapter(listaAdapter);
@@ -56,10 +57,11 @@ public class ListaActivity extends AppCompatActivity {
         valueEventListenerLista = listaRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                minhaLista.clear();
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     minhaLista.add(dataSnapshot.getValue(Lista.class));
                 }
+                Collections.reverse(minhaLista);
                 listaAdapter.notifyDataSetChanged();
             }
 

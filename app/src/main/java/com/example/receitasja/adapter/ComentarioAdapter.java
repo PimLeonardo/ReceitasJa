@@ -40,7 +40,7 @@ public class ComentarioAdapter extends RecyclerView.Adapter<ComentarioAdapter.My
 
         holder.textViewNomeComentarios.setText(comentario.getNomeUsuario());
         holder.textViewComentario.setText(comentario.getComentario());
-        Glide.with(context).load(comentario.getCaminhoFoto()).into(holder.imageFotoComentario);
+        Glide.with(context).load(comentario.getCaminhoFoto()).placeholder(R.drawable.avatar).error(R.drawable.avatar).into(holder.imageFotoComentario);
     }
 
     @Override
