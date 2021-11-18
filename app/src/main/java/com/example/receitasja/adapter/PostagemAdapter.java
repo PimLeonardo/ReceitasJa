@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.receitasja.R;
 import com.example.receitasja.activity.AbrirPostagemActivity;
+import com.example.receitasja.activity.CadastroActivity;
 import com.example.receitasja.activity.ComentariosActivity;
 import com.example.receitasja.model.Feed;
 import com.example.receitasja.model.PostagemReceita;
@@ -77,6 +79,7 @@ public class PostagemAdapter extends RecyclerView.Adapter<PostagemAdapter.MyView
 
         holder.adicionar.setOnClickListener(v -> {
             postagemReceita.adicionarLista();
+            Toast.makeText(context,"Receita adicionada com sucesso",Toast.LENGTH_SHORT).show();
         });
 
         holder.imagePostagem.setOnClickListener(v -> {

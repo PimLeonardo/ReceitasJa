@@ -35,8 +35,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/fotoPerfilAbrirPostagem"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             tools:src="@drawable/avatar"

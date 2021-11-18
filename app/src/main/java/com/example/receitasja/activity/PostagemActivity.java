@@ -119,12 +119,22 @@ public class PostagemActivity extends AppCompatActivity {
 
     private void fazerPostagem() {
 
-        alertDialog ("Salvando postagem");
         PostagemReceita postagem = new PostagemReceita();
         postagem.setIdUsuario(idUsuarioLogado);
-        postagem.setTextReceita(textReceita.getText().toString());
-        postagem.setTextNomeReceita(textNomeReceita.getText().toString());
-        postagem.setTextIngredientes(textIngredientes.getText().toString());
+
+        String titulo = textNomeReceita.getText().toString();
+        String ingredientes = textIngredientes.getText().toString();
+        String receita = textReceita.getText().toString();
+
+        if (titulo.isEmpty() || ingredientes.isEmpty() || receita.isEmpty()) {
+
+            Toast.makeText(PostagemActivity.this,"Preencha todos os campos",Toast.LENGTH_SHORT).show();
+        } else {
+        alertDialog ("Salvando postagem");
+
+        postagem.setTextReceita(receita);
+        postagem.setTextNomeReceita(ingredientes);
+        postagem.setTextIngredientes(titulo);
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         imagem.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream);
@@ -151,6 +161,7 @@ public class PostagemActivity extends AppCompatActivity {
                 }
             });
         });
+        }
     }
 
     private  void iniciarComponentes() {
