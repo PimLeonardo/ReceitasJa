@@ -133,8 +133,8 @@ public class PostagemActivity extends AppCompatActivity {
         alertDialog ("Salvando postagem");
 
         postagem.setTextReceita(receita);
-        postagem.setTextNomeReceita(ingredientes);
-        postagem.setTextIngredientes(titulo);
+        postagem.setTextIngredientes(ingredientes);
+        postagem.setTextNomeReceita(titulo);
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         imagem.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream);

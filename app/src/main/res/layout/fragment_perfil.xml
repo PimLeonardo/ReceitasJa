@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.PerfilFragment"
-    android:background="@drawable/background">
+    tools:context=".fragment.PerfilFragment">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imagePerfilFoto"
@@ -22,13 +21,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        tools:text="Nome"
         android:textColor="@color/text"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toTopOf="parent" />
+
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Nome" />
 
     <TextView
         android:id="@+id/seguidoresPerfil"
@@ -45,10 +45,11 @@
         android:id="@+id/seguindoPerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:text="Seguindo"
         android:textColor="@color/text"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toBottomOf="@+id/numeroSeguindoPerfil" />
 
@@ -56,15 +57,19 @@
         android:id="@+id/buttonCriarLista"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/background_botao_perfil"
         android:elevation="6dp"
         android:text="Minhas receitas"
         android:textColor="@color/white"
         android:textSize="12dp"
         app:layout_constraintBottom_toTopOf="@+id/gridViewPerfil"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="@+id/guideline2" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/seguidoresPerfil" />
 
     <TextView
         android:id="@+id/numeroSeguidoresPerfil"
@@ -84,63 +89,55 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        tools:text="0"
+        android:layout_marginEnd="16dp"
         android:textColor="@color/text"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/nomePerfil" />
+        app:layout_constraintTop_toBottomOf="@+id/nomePerfil"
+        tools:text="0" />
 
     <Button
         android:id="@+id/buttonEditarSeguirPerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/background_botao_perfil"
         android:elevation="6dp"
         android:text="Editar perfil"
         android:textColor="@color/white"
         android:textSize="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline6"
-        app:layout_constraintEnd_toStartOf="@+id/buttonCriarLista"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/gridViewPerfil"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seguidoresPerfil" />
 
     <GridView
         android:id="@+id/gridViewPerfil"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:numColumns="4"
+        android:numColumns="3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline6" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonCriarLista" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="153dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="406dp" />
+        app:layout_constraintGuide_percent="0.34" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="273dp" />
+        app:layout_constraintGuide_percent="0.66" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="173dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
